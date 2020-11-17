@@ -1,5 +1,16 @@
-<h2 class="h3 text-dark mb-4">読書ログの登録</h2>
-<form action="create.php" method="POST">
+<!-- <?php if (isset($_POST['register'])) : ?>
+    <h2 class="h3 text-dark mb-4">読書ログの登録</h2>
+<?php else : ?>
+    <h2 class="h3 text-dark mb-4">読書ログの更新</h2>
+<?php endif; ?> -->
+
+<?php if (isset($_POST['update']) || isset($_POST['update_translate'])) : ?>
+    <h2 class="h3 text-dark mb-4">読書ログの更新</h2>
+<?php else : ?>
+    <h2 class="h3 text-dark mb-4">読書ログの登録</h2>
+<?php endif; ?>
+
+<form action="edit.php" method="POST">
     <?php if (count($errors)) : ?>
         <ul class="text-danger">
             <?php foreach ($errors as $error) : ?>
@@ -39,5 +50,25 @@
         <label for="summary">感想</label>
         <textarea type="text" name="summary" id="summary" rows="10" class="form-control"><?php echo $review['summary'] ?></textarea>
     </div>
-    <button type="submit" class="btn btn-primary">登録する</button>
+    <!-- <?php if (isset($_POST['register'])) : ?>
+        <button type="submit" name="register" class="btn btn-primary">登録する</button>
+    <?php else : ?>
+        <button type="submit" name="previous" class="btn btn-light">戻る</button>
+        <button type="submit" name="update" class="btn btn-primary" onclick="return columnUpdate()">更新する</button>
+        <input type="hidden" name="id" value="<?php echo $review['id'] ?>">
+        <?php endif; ?> -->
+    <?php if (isset($_POST['update']) || isset($_POST['update_translate'])) : ?>
+        <button type="submit" name="previous" class="btn btn-light">戻る</button>
+        <button type="submit" name="update" class="btn btn-primary" onclick="return columnUpdate()">更新する</button>
+        <input type="hidden" name="id" value="<?php echo $review['id'] ?>">
+    <?php else : ?>
+        <button type="submit" name="register" class="btn btn-primary">登録する</button>
+    <?php endif; ?>
 </form>
+
+<script type="text/javascript">
+    function columnUpdate() {
+        var str = confirm('このデータを更新しますか？');
+        return str;
+    }
+</script>
